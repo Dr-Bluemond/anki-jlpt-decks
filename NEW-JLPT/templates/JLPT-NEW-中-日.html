@@ -275,10 +275,12 @@
   function getFeedbackLink(platform = 'github', VocabKanji = '{{text:kanji:VocabKanji}}', NoteID = '{{text:NoteID}}') {
     const current = getCurrentVersion()
     const urls = {
-      github: `https://github.com/5mdld/anki-jlpt-decks/issues/new?${new URLSearchParams({
+      github: `https://github.com/5mdld/anki-jlpt-decks/issues/new?${Object.entries({
         title: `[卡片反馈] ${getToday()} 「${VocabKanji}」`,
-        body: `### 卡片信息\n- 卡片版本: ${current}\n- VocabKanji: ${VocabKanji}\n- NoteID: ${NoteID}\n\n### 反馈内容\n`,
-      })}`,
+        body: `### 卡片信息\n- 卡片版本: ${current}\n- VocabKanji: ${VocabKanji}\n- NoteID: ${NoteID}\n\n### 反馈内容\n`
+      })
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join('&')}`,
       feishu: `https://ncn8ci2h7v0y.feishu.cn/share/base/form/shrcnTh5DRxtrGWtiWTkdBlSWze?${new URLSearchParams({
         NoteID,
         Version: current
